@@ -1,0 +1,741 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WorkBuddy.MAUI.Views.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:component="clr-namespace:WorkBuddy.MAUI.Views.Controls"
+    xmlns:controls="clr-namespace:WorkBuddy.MAUI.Controls"
+    xmlns:models="clr-namespace:WorkBuddy.MAUI.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:WorkBuddy.MAUI.ViewModels"
+    x:DataType="viewmodels:MainPageViewModel"
+    Background="{DynamicResource BackgroundGradient}">
+
+    <Grid>
+        <!--  Define two rows: one for the content and one for the fixed Frame  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!--  Takes just enough space for the Frame  -->
+        </Grid.RowDefinitions>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                Padding="20,20,20,80"
+                Background="{DynamicResource BackgroundGradient}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+
+                <!--  Top bar  -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  User icon  -->
+                    <Border
+                        Grid.Column="0"
+                        Margin="0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="60"
+                        HorizontalOptions="Center"
+                        Stroke="#80FFFFFF"
+                        StrokeShape="RoundRectangle 40,40,40,40"
+                        StrokeThickness="6"
+                        WidthRequest="60">
+
+                        <Border
+                            Margin="0"
+                            BackgroundColor="Transparent"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            Stroke="White"
+                            StrokeShape="RoundRectangle 35,35,35,35"
+                            StrokeThickness="3"
+                            WidthRequest="50">
+
+                            <!--  Image inside the borders  -->
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="50"
+                                HorizontalOptions="Center"
+                                SemanticProperties.Description="Profile photo of a user"
+                                Source="profile.jpg"
+                                VerticalOptions="Center"
+                                WidthRequest="50" />
+                        </Border>
+                    </Border>
+
+                    <!--  Welcome User  -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="Center">
+                        <Label
+                            FontFamily="OpenSansRegular"
+                            HorizontalTextAlignment="Center"
+                            Text="Good Morning"
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            Margin="0,2,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="Inter"
+                            Text="Michael Drogba"
+                            VerticalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!--  Notification Icon  -->
+                    <Grid Grid.Column="2">
+                        <Border
+                            Grid.Column="0"
+                            Margin="0"
+                            BackgroundColor="Transparent"
+                            HeightRequest="60"
+                            HorizontalOptions="Center"
+                            Stroke="#80FFFFFF"
+                            StrokeShape="RoundRectangle 40,40,40,40"
+                            StrokeThickness="6"
+                            WidthRequest="60">
+
+                            <Border
+                                Margin="0"
+                                BackgroundColor="Transparent"
+                                HeightRequest="50"
+                                HorizontalOptions="Center"
+                                Stroke="White"
+                                StrokeShape="RoundRectangle 35,35,35,35"
+                                StrokeThickness="3"
+                                WidthRequest="50">
+
+                                <!--  Image inside the borders  -->
+                                <Button
+                                    Padding="0"
+                                    Background="{DynamicResource DarkThemeBackground}"
+                                    FontAttributes="Bold"
+                                    FontFamily="MIconsRound"
+                                    FontSize="25"
+                                    HeightRequest="50"
+                                    HorizontalOptions="Center"
+                                    Text="&#xe7f4;"
+                                    TextColor="{DynamicResource DarkThemeText}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50" />
+                            </Border>
+                        </Border>
+
+                    </Grid>
+                </Grid>
+
+                <!--  Search bar  -->
+                <Grid Margin="0,25,0,0">
+                    <BoxView
+                        BackgroundColor="{DynamicResource DarkSecondary}"
+                        CornerRadius="25"
+                        HeightRequest="45" />
+                    <controls:CustomSearchBar
+                        BackgroundColor="Transparent"
+                        CancelButtonColor="{DynamicResource White}"
+                        Placeholder="Search your task.."
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <!--  Timeline  -->
+                <VerticalStackLayout Margin="4,20" HorizontalOptions="FillAndExpand">
+                    <Grid
+                        ColumnDefinitions="*,Auto"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <Label
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansSemibold"
+                            FontSize="24"
+                            Text="Your Timeline"
+                            VerticalOptions="StartAndExpand" />
+                        <HorizontalStackLayout
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End">
+                            <controls:CustomPicker
+                                x:Name="picker"
+                                Title="June"
+                                FontAttributes="Bold"
+                                FontFamily="OpenSansSemibold"
+                                SelectedIndex="5"
+                                TextColor="White">
+                                <controls:CustomPicker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>January</x:String>
+                                        <x:String>Febuary</x:String>
+                                        <x:String>March</x:String>
+                                        <x:String>April</x:String>
+                                        <x:String>May</x:String>
+                                        <x:String>June</x:String>
+                                        <x:String>July</x:String>
+                                        <x:String>August</x:String>
+                                        <x:String>September</x:String>
+                                        <x:String>October</x:String>
+                                        <x:String>November</x:String>
+                                        <x:String>December</x:String>
+                                    </x:Array>
+                                </controls:CustomPicker.ItemsSource>
+                            </controls:CustomPicker>
+                            <Image HeightRequest="22" Source="arrow_down.svg" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <HorizontalStackLayout />
+                    <Grid ColumnDefinitions=".2*,.2*,.2*,.2*,.2*">
+                        <Frame
+                            Grid.Column="0"
+                            Margin="3,0"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Center"
+                                    Text="3" />
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontAttributes="Bold"
+                                    Text="Tue" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame
+                            Grid.Column="1"
+                            Margin="3,0"
+                            Padding="0"
+                            BackgroundColor="{DynamicResource Primary}"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Center"
+                                    Text="4" />
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontAttributes="Bold"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Wed" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame
+                            Grid.Column="2"
+                            Margin="3,0"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Center"
+                                    Text="5" />
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontAttributes="Bold"
+                                    Text="Thu" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame
+                            Grid.Column="3"
+                            Margin="3,0"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Center"
+                                    Text="6" />
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontAttributes="Bold"
+                                    Text="Fri" />
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame
+                            Grid.Column="4"
+                            Margin="3,0"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Center"
+                                    Text="7" />
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontAttributes="Bold"
+                                    Text="Sat" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <Grid
+                    Margin="0,10,0,0"
+                    ColumnDefinitions=".5*,.5*"
+                    ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Frame
+                            Padding="15"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            BorderColor="Transparent"
+                            CornerRadius="20">
+                            <VerticalStackLayout>
+                                <VerticalStackLayout>
+                                    <Label FontAttributes="Bold" Text="UNIQLO Workspace" />
+                                    <VerticalStackLayout Margin="0,8,0,0">
+                                        <HorizontalStackLayout Padding="0" VerticalOptions="Center">
+                                            <component:RoundedCheckBox IsChecked="True" />
+                                            <Label
+                                                Margin="5,0,0,0"
+                                                FontFamily="Inter"
+                                                FontSize="12"
+                                                Opacity=".8"
+                                                Text="Birdscode Meeting"
+                                                TextDecorations="Strikethrough"
+                                                VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Margin="0,5" VerticalOptions="Center">
+                                            <component:RoundedCheckBox />
+                                            <Label
+                                                Margin="5,0,0,0"
+                                                FontFamily="Inter"
+                                                FontSize="12"
+                                                Opacity=".8"
+                                                Text="Daily Report"
+                                                VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Margin="0,5,0,0">
+                                    <Label FontAttributes="Bold" Text="Mick Task Project" />
+                                    <VerticalStackLayout Margin="0,8,0,0">
+                                        <HorizontalStackLayout Padding="0" VerticalOptions="Center">
+                                            <component:RoundedCheckBox IsChecked="True" />
+                                            <Label
+                                                Margin="8,0,0,0"
+                                                FontFamily="Inter"
+                                                FontSize="12"
+                                                Opacity=".8"
+                                                Text="Create invoice"
+                                                VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Margin="0,5" VerticalOptions="Center">
+                                            <component:RoundedCheckBox />
+                                            <Label
+                                                Margin="8,0,0,0"
+                                                FontFamily="Inter"
+                                                FontSize="12"
+                                                Opacity=".8"
+                                                Text="Send brief to developers"
+                                                VerticalTextAlignment="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame
+                            Margin="0,10,0,0"
+                            BackgroundColor="{DynamicResource Gray900}"
+                            BorderColor="Transparent"
+                            CornerRadius="25">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="Daily Task"
+                                    TextColor="{DynamicResource White}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="8/10 done"
+                                    TextColor="{DynamicResource White}" />
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="45"
+                                    HorizontalOptions="Center"
+                                    Stroke="{DynamicResource Secondary}"
+                                    StrokeThickness="2"
+                                    VerticalOptions="Center"
+                                    WidthRequest="45">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle BackgroundColor="Transparent" CornerRadius="50" />
+                                    </Border.StrokeShape>
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Text="90%"
+                                        VerticalOptions="Center" />
+                                </Border>
+                            </Grid>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Frame
+                        Grid.Column="1"
+                        Padding="15"
+                        BackgroundColor="{DynamicResource Primary}"
+                        BorderColor="Transparent"
+                        CornerRadius="25"
+                        VerticalOptions="FillAndExpand">
+                        <VerticalStackLayout>
+                            <VerticalStackLayout>
+                                <Label FontAttributes="Bold" Text="Shared Workspace" />
+                                <VerticalStackLayout Margin="0,8,0,0">
+                                    <HorizontalStackLayout Padding="0" VerticalOptions="Center">
+                                        <component:RoundedCheckBox ActiveColor="#ffffff" IsChecked="True" />
+                                        <Label
+                                            Margin="5,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Birdscode Meeting"
+                                            TextDecorations="Strikethrough"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Margin="0,5" VerticalOptions="Center">
+                                        <component:RoundedCheckBox />
+                                        <Label
+                                            Margin="5,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Daily Report"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Margin="0,10,0,0">
+                                <Label FontAttributes="Bold" Text="Private Workspace" />
+                                <VerticalStackLayout Margin="0,10,0,0">
+                                    <HorizontalStackLayout Padding="0" VerticalOptions="Center">
+                                        <component:RoundedCheckBox ActiveColor="White" IsChecked="True" />
+                                        <Label
+                                            Margin="8,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Create invoice"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Margin="0,5" VerticalOptions="Center">
+                                        <component:RoundedCheckBox />
+                                        <Label
+                                            Margin="8,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Split tasks"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Padding="0" VerticalOptions="Center">
+                                        <component:RoundedCheckBox ActiveColor="White" IsChecked="True" />
+                                        <Label
+                                            Margin="8,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Create invoice"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Margin="0,5" VerticalOptions="Center">
+                                        <component:RoundedCheckBox />
+                                        <Label
+                                            Margin="8,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Delete Invoice"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout VerticalOptions="Center">
+                                        <component:RoundedCheckBox />
+                                        <Label
+                                            Margin="8,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Send brief to developers"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout
+                                        Margin="0,5"
+                                        Padding="0"
+                                        VerticalOptions="Center">
+                                        <component:RoundedCheckBox ActiveColor="White" IsChecked="True" />
+                                        <Label
+                                            Margin="8,0,0,0"
+                                            FontFamily="Inter"
+                                            FontSize="12"
+                                            Opacity=".8"
+                                            Text="Write article"
+                                            VerticalTextAlignment="Center" />
+                                    </HorizontalStackLayout>
+
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+
+                <Grid
+                    Margin="5,20,5,0"
+                    ColumnDefinitions="*,Auto"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <Label
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="24"
+                        Text="Today's Task"
+                        VerticalOptions="StartAndExpand" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End">
+                        <Label Text="See more" />
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout
+                    Margin="0,8,0,0"
+                    Padding="0"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="10">
+                    <Frame
+                        Margin="0,0,0,0"
+                        BackgroundColor="{DynamicResource LightThemeBackground}"
+                        BorderColor="Transparent"
+                        CornerRadius="25"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            ColumnSpacing="15"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="Meeting with UNIQLO"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="Prepare meeting with them at 09:00 PM"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                            </VerticalStackLayout>
+                            <component:RoundedCheckBox
+                                Grid.Column="1"
+                                Padding="3"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                IsChecked="True"
+                                WidthRequest="30" />
+                        </Grid>
+                    </Frame>
+                    <Frame
+                        Margin="0,0,0,0"
+                        BackgroundColor="{DynamicResource LightThemeBackground}"
+                        BorderColor="Transparent"
+                        CornerRadius="25"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            ColumnSpacing="15"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="Meeting with UNIQLO"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="Prepare meeting with them at 09:00 PM"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                            </VerticalStackLayout>
+                            <component:RoundedCheckBox
+                                Grid.Column="1"
+                                Padding="3"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                IsChecked="True"
+                                WidthRequest="30" />
+                        </Grid>
+                    </Frame>
+                    <Frame
+                        Margin="0,0,0,0"
+                        BackgroundColor="{DynamicResource LightThemeBackground}"
+                        BorderColor="Transparent"
+                        CornerRadius="25"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            ColumnSpacing="15"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="Meeting with UNIQLO"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="Prepare meeting with them at 09:00 PM"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                            </VerticalStackLayout>
+                            <component:RoundedCheckBox
+                                Grid.Column="1"
+                                Padding="3"
+                                HeightRequest="20"
+                                HorizontalOptions="End"
+                                IsChecked="True"
+                                WidthRequest="20" />
+                        </Grid>
+                    </Frame>
+                    <Frame
+                        Margin="0,0,0,0"
+                        BackgroundColor="{DynamicResource LightThemeBackground}"
+                        BorderColor="Transparent"
+                        CornerRadius="25"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <Grid
+                            ColumnDefinitions="*,Auto"
+                            ColumnSpacing="15"
+                            HorizontalOptions="FillAndExpand">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="Meeting with UNIQLO"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="Prepare meeting with them at 09:00 PM"
+                                    TextColor="{DynamicResource LightThemeText}" />
+                            </VerticalStackLayout>
+                            <component:RoundedCheckBox
+                                Grid.Column="1"
+                                Padding="3"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                IsChecked="True"
+                                WidthRequest="30" />
+                        </Grid>
+                    </Frame>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <BoxView
+            Grid.Row="1"
+            Background="{DynamicResource MenuOverlayGradient}"
+            HeightRequest="150"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End" />
+        <Frame
+            Grid.Row="1"
+            Margin="0"
+            Padding="0"
+            BackgroundColor="Transparent"
+            CornerRadius="0"
+            HorizontalOptions="Center"
+            VerticalOptions="End">
+            <HorizontalStackLayout>
+                <Frame
+                    Margin="20"
+                    Padding="5"
+                    BackgroundColor="{DynamicResource Black}"
+                    CornerRadius="100">
+                    <HorizontalStackLayout VerticalOptions="Center">
+                        <Button
+                            Margin="0"
+                            Padding="0"
+                            Background="{DynamicResource Primary}"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.MainPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="25"
+                            Text="&#xe88a;"
+                            TextColor="White" />
+                        <Button
+                            Margin="0"
+                            Padding="8"
+                            Background="Transparent"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.TaskListPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            Text="&#xe873;"
+                            TextColor="White" />
+                        <Button
+                            Margin="0"
+                            Padding="8"
+                            Background="Transparent"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.CalendarPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            Text="&#xe1a0;"
+                            TextColor="White" />
+                        <Button
+                            Margin="0"
+                            Padding="8"
+                            Background="Transparent"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.SettingPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            Text="&#xe8b8;"
+                            TextColor="White" />
+                    </HorizontalStackLayout>
+                </Frame>
+                <Frame
+                    Margin="20"
+                    Padding="5"
+                    BackgroundColor="{DynamicResource Black}"
+                    CornerRadius="100">
+                    <Button
+                        Padding="0"
+                        Background="{DynamicResource Primary}"
+                        Command="{Binding NavigateToCommand}"
+                        CommandParameter="{x:Static models:Routes.AddTaskPageRoute}"
+                        CornerRadius="50"
+                        FontAttributes="Bold"
+                        FontFamily="MIconsRound"
+                        FontSize="30"
+                        Text="&#xe145;"
+                        TextColor="{DynamicResource DarkThemeText}" />
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WorkBuddy.MAUI.Views.Pages.AddTaskPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:component="clr-namespace:WorkBuddy.MAUI.Views.Controls"
+    xmlns:controls="clr-namespace:WorkBuddy.MAUI.Controls"
+    xmlns:models="clr-namespace:WorkBuddy.MAUI.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:WorkBuddy.MAUI.ViewModels"
+    x:DataType="viewmodels:AddTaskViewModel"
+    Background="{DynamicResource DarkThemeBackground}">
+    <Grid>
+        <!--  Define two rows: one for the content and one for the fixed Frame  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!--  Takes just enough space for the Frame  -->
+        </Grid.RowDefinitions>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                Padding="20,20,20,80"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <!--  Top bar  -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Back icon  -->
+                    <Border
+                        Grid.Column="0"
+                        Margin="0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        Stroke="#20FFFFFF"
+                        StrokeShape="RoundRectangle 40,40,40,40"
+                        StrokeThickness="6"
+                        WidthRequest="50">
+
+                        <Border
+                            Margin="0"
+                            BackgroundColor="{DynamicResource White}"
+                            HeightRequest="45"
+                            HorizontalOptions="Center"
+                            Stroke="White"
+                            StrokeShape="RoundRectangle 35,35,35,35"
+                            StrokeThickness="3"
+                            WidthRequest="45">
+
+                            <!--  Image inside the borders  -->
+                            <Button
+                                Margin="0,0,2,0"
+                                Background="{DynamicResource LightThemeBackground}"
+                                Command="{Binding NavigateToCommand}"
+                                CommandParameter="{x:Static models:Routes.BackRoute}"
+                                FontAttributes="Bold"
+                                FontFamily="MIconsRound"
+                                FontSize="30"
+                                HeightRequest="57"
+                                HorizontalOptions="Center"
+                                Text="&#xe5cb;"
+                                TextColor="{DynamicResource LightThemeText}"
+                                VerticalOptions="Center"
+                                WidthRequest="57" />
+                        </Border>
+                    </Border>
+
+                    <!--  Page heading  -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Margin="40,0,0,0"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="Center">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansRegular"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="New Task"
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout Margin="0,30,0,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="10,0"
+                            CharacterSpacing="1"
+                            FontFamily="Inter"
+                            FontSize="16"
+                            Text="Title" />
+                        <Frame
+                            Margin="0,5,0,0"
+                            Padding="15,5"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="50"
+                            HasShadow="True"
+                            VerticalOptions="Center">
+                            <Frame.Shadow>
+                                <Shadow
+                                    Brush="{DynamicResource Black}"
+                                    Opacity="0.2"
+                                    Radius="20"
+                                    Offset="10,10" />
+                            </Frame.Shadow>
+                            <controls:BorderlessEntry
+                                FontSize="15"
+                                Placeholder="Lorem ipsum dolor"
+                                PlaceholderColor="#70FFFFFF"
+                                Text="{Binding WorkItemDto.Title}"
+                                VerticalOptions="Center" />
+                        </Frame>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Margin="0,20,0,0">
+                        <Label
+                            Margin="10,0"
+                            CharacterSpacing="1"
+                            FontFamily="Inter"
+                            FontSize="16"
+                            Text="Description" />
+                        <Frame
+                            Margin="0,5,0,0"
+                            Padding="15,0"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="25"
+                            HasShadow="True"
+                            VerticalOptions="Center">
+                            <Frame.Shadow>
+                                <Shadow
+                                    Brush="{DynamicResource Black}"
+                                    Opacity="0.2"
+                                    Radius="20"
+                                    Offset="10,10" />
+                            </Frame.Shadow>
+                            <controls:BorderlessEditor
+                                BackgroundColor="Transparent"
+                                FontFamily="Inter"
+                                FontSize="15"
+                                HeightRequest="150"
+                                Placeholder="Some dummy dexcription here for the task that is being created and this will be some kinda hint"
+                                PlaceholderColor="#70FFFFFF"
+                                Text="{Binding WorkItemDto.Description}"
+                                VerticalOptions="Center" />
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Grid
+                        Margin="0,20,0,0"
+                        ColumnDefinitions=".5*,.5*"
+                        ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" HorizontalOptions="FillAndExpand">
+                            <Label
+                                Margin="10,0"
+                                CharacterSpacing="1"
+                                FontFamily="Inter"
+                                FontSize="16"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Date" />
+                            <Frame
+                                Margin="0,5,0,0"
+                                Padding="15,5"
+                                BackgroundColor="{DynamicResource DarkSecondary}"
+                                CornerRadius="50"
+                                HasShadow="True"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="Center">
+                                <Frame.Shadow>
+                                    <Shadow
+                                        Brush="{DynamicResource Black}"
+                                        Opacity="0.2"
+                                        Radius="20"
+                                        Offset="10,10" />
+                                </Frame.Shadow>
+                                <Grid>
+                                    <controls:BorderlessDatePicker
+                                        Date="{Binding WorkItemDto.ScheduledOnDate}"
+                                        FontFamily="Inter"
+                                        FontSize="15"
+                                        VerticalOptions="Center" />
+                                    <Image
+                                        HeightRequest="20"
+                                        HorizontalOptions="End"
+                                        Source="calendar_white.svg"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{DynamicResource DarkThemeText}" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="FillAndExpand">
+                            <Label
+                                Margin="10,0"
+                                CharacterSpacing="1"
+                                FontFamily="Inter"
+                                FontSize="16"
+                                Text="Time" />
+                            <Frame
+                                Margin="0,5,0,0"
+                                Padding="15,5"
+                                BackgroundColor="{DynamicResource DarkSecondary}"
+                                CornerRadius="25"
+                                HasShadow="True"
+                                VerticalOptions="Center">
+                                <Frame.Shadow>
+                                    <Shadow
+                                        Brush="{DynamicResource Black}"
+                                        Opacity="0.2"
+                                        Radius="20"
+                                        Offset="10,10" />
+                                </Frame.Shadow>
+                                <Grid>
+                                    <controls:BorderlessTimePicker
+                                        TextColor="{DynamicResource White}"
+                                        Time="{Binding WorkItemDto.ScheduledAtTime}"
+                                        VerticalOptions="Center" />
+                                    <Image
+                                        HeightRequest="20"
+                                        HorizontalOptions="End"
+                                        Source="watch_white.svg"
+                                        VerticalOptions="Center"
+                                        WidthRequest="20">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="{DynamicResource DarkThemeText}" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Grid>
+                    <VerticalStackLayout Margin="0,20,0,0">
+                        <Label
+                            Margin="10,0"
+                            CharacterSpacing="1"
+                            FontFamily="Inter"
+                            FontSize="16"
+                            Text="Workspace" />
+                        <Frame
+                            Margin="0,5,0,0"
+                            Padding="15,5"
+                            BackgroundColor="{DynamicResource DarkSecondary}"
+                            CornerRadius="25"
+                            HasShadow="True"
+                            VerticalOptions="Center">
+                            <Frame.Shadow>
+                                <Shadow
+                                    Brush="{DynamicResource Black}"
+                                    Opacity="0.2"
+                                    Radius="20"
+                                    Offset="10,10" />
+                            </Frame.Shadow>
+                            <Grid VerticalOptions="Center">
+                                <controls:CustomPicker
+                                    Title="Dummy workspace"
+                                    BackgroundColor="Transparent"
+                                    FontFamily="Inter"
+                                    FontSize="15"
+                                    TitleColor="#70FFFFFF"
+                                    VerticalOptions="Center" />
+                                <Image
+                                    HeightRequest="20"
+                                    HorizontalOptions="End"
+                                    Rotation="90"
+                                    Source="arrow_white.svg"
+                                    VerticalOptions="Center"
+                                    WidthRequest="20">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{DynamicResource DarkThemeText}" />
+                                    </Image.Behaviors>
+                                </Image>
+                            </Grid>
+                        </Frame>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        <BoxView
+            Grid.Row="1"
+            Background="{DynamicResource MenuOverlayGradient}"
+            HeightRequest="150"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End" />
+
+        <Frame
+            Grid.Row="1"
+            Margin="0,0,0,20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            CornerRadius="0"
+            HorizontalOptions="Center"
+            VerticalOptions="End">
+            <Frame
+                Padding="50,12"
+                BackgroundColor="{DynamicResource Primary}"
+                CornerRadius="100"
+                VerticalOptions="Center">
+                <HorizontalStackLayout
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Center"
+                    Spacing="6"
+                    VerticalOptions="Center">
+                    <Image
+                        HeightRequest="16"
+                        Source="add_white.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="16" />
+                    <Label
+                        Padding="0"
+                        CharacterSpacing=".8"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="Create"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <!--  Add TapGestureRecognizer to simulate button click  -->
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CreateTaskCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </Frame>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WorkBuddy.MAUI.Views.Pages.TaskListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:component="clr-namespace:WorkBuddy.MAUI.Views.Controls"
+    xmlns:controls="clr-namespace:WorkBuddy.MAUI.Controls"
+    xmlns:models="clr-namespace:WorkBuddy.MAUI.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:WorkBuddy.MAUI.ViewModels"
+    x:DataType="viewmodels:TaskListViewModel"
+    Background="{DynamicResource DarkThemeBackground}">
+    <Grid>
+        <!--  Define two rows: one for the content and one for the fixed Frame  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!--  Takes just enough space for the Frame  -->
+        </Grid.RowDefinitions>
+        <Grid
+            Padding="20,20,20,80"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="Auto,Auto,*"
+            VerticalOptions="FillAndExpand">
+
+            <!--  Top bar  -->
+            <Grid Grid.Row="0" ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Back icon  -->
+                <Border
+                    Grid.Column="0"
+                    Margin="0"
+                    BackgroundColor="Transparent"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Stroke="#20FFFFFF"
+                    StrokeShape="RoundRectangle 40,40,40,40"
+                    StrokeThickness="6"
+                    WidthRequest="50">
+
+                    <Border
+                        Margin="0"
+                        BackgroundColor="{DynamicResource White}"
+                        HeightRequest="45"
+                        HorizontalOptions="Center"
+                        Stroke="White"
+                        StrokeShape="RoundRectangle 35,35,35,35"
+                        StrokeThickness="3"
+                        WidthRequest="45">
+
+                        <!--  Image inside the borders  -->
+                        <Button
+                            Margin="0,0,2,0"
+                            Background="{DynamicResource LightThemeBackground}"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.BackRoute}"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="30"
+                            HeightRequest="57"
+                            HorizontalOptions="Center"
+                            Text="&#xe5cb;"
+                            TextColor="{DynamicResource LightThemeText}"
+                            VerticalOptions="Center"
+                            WidthRequest="57" />
+                    </Border>
+                </Border>
+
+                <Frame
+                    Grid.Column="1"
+                    Margin="0"
+                    Padding="16,0"
+                    BackgroundColor="{DynamicResource DarkSecondary}"
+                    CornerRadius="25"
+                    HasShadow="True"
+                    HeightRequest="45">
+                    <Frame.Shadow>
+                        <Shadow
+                            Brush="{DynamicResource Black}"
+                            Opacity="0.2"
+                            Radius="20"
+                            Offset="10,10" />
+                    </Frame.Shadow>
+                    <Grid Padding="0" VerticalOptions="Center">
+                        <controls:CustomPicker
+                            Title="Select workspace"
+                            Margin="0"
+                            BackgroundColor="aqua"
+                            FontFamily="Inter"
+                            FontSize="15"
+                            ItemDisplayBinding="{Binding Name}"
+                            ItemsSource="{Binding Workspaces}"
+                            SelectedItem="{Binding SelectedWorkspace, Mode=TwoWay}"
+                            TitleColor="#70FFFFFF"
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center">
+                            <controls:CustomPicker.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    Command="{Binding SelectWorkspaceCommand}"
+                                    CommandParameter="{Binding SelectedWorkspace}"
+                                    EventName="SelectedIndexChanged" />
+                            </controls:CustomPicker.Behaviors>
+                        </controls:CustomPicker>
+                        <Image
+                            HeightRequest="20"
+                            HorizontalOptions="End"
+                            Rotation="90"
+                            Source="arrow_white.svg"
+                            VerticalOptions="Center"
+                            WidthRequest="20">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="{DynamicResource DarkThemeText}" />
+                            </Image.Behaviors>
+                        </Image>
+                    </Grid>
+                </Frame>
+            </Grid>
+
+            <RefreshView
+                Grid.Row="2"
+                Margin="0,20,0,0"
+                Background="Transparent"
+                Command="{Binding GetTasksCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsRefreshing="{Binding IsRefreshing}"
+                RefreshColor="{DynamicResource Primary}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView HorizontalOptions="FillAndExpand" ItemsSource="{Binding WorkItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:WorkItemDto">
+                            <Frame
+                                Grid.Row="1"
+                                Margin="0,5,0,8"
+                                Padding="0"
+                                BackgroundColor="{DynamicResource DarkSecondary}"
+                                BorderColor="Transparent"
+                                CornerRadius="15"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+                                <SwipeView Background="{DynamicResource DarkSecondary}" Threshold="50">
+                                    <SwipeView.RightItems>
+                                        <SwipeItemView CommandParameter="{Binding Id}">
+                                            <Grid BackgroundColor="DarkRed" WidthRequest="50">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontFamily="MIconsRound"
+                                                    FontSize="25"
+                                                    HorizontalOptions="Center"
+                                                    Text="&#xe872;"
+                                                    VerticalOptions="Center" />
+                                            </Grid>
+                                            <SwipeItemView.Command>
+                                                <Binding Path="BindingContext.DeleteTaskCommand" Source="{RelativeSource AncestorType={x:Type ContentPage}}" />
+                                            </SwipeItemView.Command>
+                                        </SwipeItemView>
+                                    </SwipeView.RightItems>
+                                    <Grid
+                                        Padding="20,15"
+                                        ColumnDefinitions="*,Auto"
+                                        ColumnSpacing="15"
+                                        HorizontalOptions="FillAndExpand">
+                                        <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Text="{Binding Title}"
+                                                TextColor="{DynamicResource DarkThemeText}" />
+                                            <HorizontalStackLayout Margin="0,2,0,0">
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Text="{Binding ScheduledOnDate, StringFormat='{0:dd/MM/yyyy  -  HH:mm tt}'}"
+                                                    TextColor="{DynamicResource DarkThemeText}" />
+                                            </HorizontalStackLayout>
+
+                                        </VerticalStackLayout>
+
+                                        <component:RoundedCheckBox
+                                            Grid.Column="1"
+                                            Padding="3"
+                                            ElementHeight="20"
+                                            ElementWidth="20"
+                                            HorizontalOptions="End"
+                                            IsChecked="{Binding IsCompleted}" />
+
+                                    </Grid>
+                                </SwipeView>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+        </Grid>
+
+        <BoxView
+            Grid.Row="1"
+            Background="{DynamicResource MenuOverlayGradient}"
+            HeightRequest="150"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End" />
+
+        <Frame
+            Grid.Row="1"
+            Margin="0,0,0,20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            CornerRadius="0"
+            HorizontalOptions="Center"
+            VerticalOptions="End">
+            <Frame
+                Padding="40,12"
+                BackgroundColor="{DynamicResource Primary}"
+                CornerRadius="100"
+                VerticalOptions="Center">
+                <HorizontalStackLayout
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Center"
+                    Spacing="6"
+                    VerticalOptions="Center">
+                    <Image
+                        HeightRequest="16"
+                        Source="add_white.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="16" />
+                    <Label
+                        Padding="0"
+                        CharacterSpacing=".8"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="Add new task"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <!--  Add TapGestureRecognizer to simulate button click  -->
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToCommand}" CommandParameter="{x:Static models:Routes.AddTaskPageRoute}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </Frame>
+    </Grid>
+</ContentPage>

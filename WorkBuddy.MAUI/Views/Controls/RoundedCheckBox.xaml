@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="WorkBuddy.MAUI.Views.Controls.RoundedCheckBox"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Border
+        x:Name="CustomCheckboxBorder"
+        Padding="2"
+        BackgroundColor="Transparent"
+        StrokeThickness="1">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnChecked" />
+        </Border.GestureRecognizers>
+        <Image
+            x:Name="checkBoxTick"
+            IsVisible="False"
+            Source="done.svg" />
+    </Border>
+</ContentView>

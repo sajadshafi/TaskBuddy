@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WorkBuddy.MAUI.Views.Pages.SettingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:component="clr-namespace:WorkBuddy.MAUI.Views.Controls"
+    xmlns:controls="clr-namespace:WorkBuddy.MAUI.Controls"
+    xmlns:models="clr-namespace:WorkBuddy.MAUI.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <Grid>
+        <!--  Define two rows: one for the content and one for the fixed Frame  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!--  Takes just enough space for the Frame  -->
+        </Grid.RowDefinitions>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                Padding="20,20,20,80"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <!--  Top bar  -->
+                <Grid ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Back icon  -->
+                    <Border
+                        Grid.Column="0"
+                        Margin="0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        Stroke="#20FFFFFF"
+                        StrokeShape="RoundRectangle 40,40,40,40"
+                        StrokeThickness="6"
+                        WidthRequest="50">
+
+                        <Border
+                            Margin="0"
+                            BackgroundColor="{DynamicResource White}"
+                            HeightRequest="45"
+                            HorizontalOptions="Center"
+                            Stroke="White"
+                            StrokeShape="RoundRectangle 35,35,35,35"
+                            StrokeThickness="3"
+                            WidthRequest="45">
+
+                            <!--  Image inside the borders  -->
+                            <Button
+                                Margin="0,0,2,0"
+                                Background="{DynamicResource LightThemeBackground}"
+                                Command="{Binding NavigateToCommand}"
+                                CommandParameter="{x:Static models:Routes.BackRoute}"
+                                FontAttributes="Bold"
+                                FontFamily="MIconsRound"
+                                FontSize="30"
+                                HeightRequest="57"
+                                HorizontalOptions="Center"
+                                Text="&#xe5cb;"
+                                TextColor="{DynamicResource LightThemeText}"
+                                VerticalOptions="Center"
+                                WidthRequest="57" />
+                        </Border>
+                    </Border>
+
+                    <!--  Page heading  -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Margin="40,0,0,0"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="Center">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="OpenSansRegular"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Settings"
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!--  Account setting  -->
+                <VerticalStackLayout Margin="0,25,0,0">
+                    <Label Margin="5,0" Text="General" />
+                    <Frame
+                        Margin="0,5,0,0"
+                        BackgroundColor="{DynamicResource DarkSecondary}"
+                        CornerRadius="20">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Max Maxine"
+                                    VerticalTextAlignment="Center" />
+                                <Image
+                                    Grid.Column="1"
+                                    HeightRequest="18"
+                                    HorizontalOptions="End"
+                                    Source="arrow_white.svg"
+                                    WidthRequest="18" />
+
+                            </Grid>
+                            <BoxView
+                                Margin="0,5"
+                                BackgroundColor="Gray"
+                                HeightRequest="1"
+                                HorizontalOptions="FillAndExpand" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Dark theme"
+                                    VerticalTextAlignment="Center" />
+                                <controls:CustomSwitch
+                                    Grid.Column="1"
+                                    Margin="0,0,-2,0"
+                                    HeightRequest="10" />
+                            </Grid>
+                            <BoxView
+                                Margin="0,2,0,2"
+                                BackgroundColor="Gray"
+                                HeightRequest="1"
+                                HorizontalOptions="FillAndExpand" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Notifications"
+                                    VerticalTextAlignment="Center" />
+                                <controls:CustomSwitch
+                                    Grid.Column="1"
+                                    Margin="0,0,-2,0"
+                                    HeightRequest="10" />
+
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Margin="0,25,0,0">
+                    <Label Margin="5,0" Text="About" />
+                    <Frame
+                        Margin="0,5,0,0"
+                        BackgroundColor="{DynamicResource DarkSecondary}"
+                        CornerRadius="20">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Privacy Policy" />
+                                <Image
+                                    Grid.Column="1"
+                                    HeightRequest="18"
+                                    HorizontalOptions="End"
+                                    Source="arrow_white.svg"
+                                    WidthRequest="18" />
+
+                            </Grid>
+                            <BoxView
+                                Margin="0,5"
+                                BackgroundColor="Gray"
+                                HeightRequest="1"
+                                HorizontalOptions="FillAndExpand" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Terms and Conditions"
+                                    VerticalTextAlignment="Center" />
+                                <Image
+                                    Grid.Column="1"
+                                    HeightRequest="18"
+                                    HorizontalOptions="End"
+                                    Source="arrow_white.svg"
+                                    WidthRequest="18" />
+                            </Grid>
+                            <BoxView
+                                Margin="0,5"
+                                BackgroundColor="Gray"
+                                HeightRequest="1"
+                                HorizontalOptions="FillAndExpand" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="Version"
+                                    VerticalTextAlignment="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    Text="0.1.1 (234241)"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!--  App Setting  -->
+            </VerticalStackLayout>
+        </ScrollView>
+        <BoxView
+            Grid.Row="1"
+            Background="{DynamicResource MenuOverlayGradient}"
+            HeightRequest="150"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End" />
+        <Frame
+            Grid.Row="1"
+            Margin="0"
+            Padding="0"
+            BackgroundColor="Transparent"
+            CornerRadius="0"
+            HorizontalOptions="Center"
+            VerticalOptions="End">
+            <HorizontalStackLayout>
+                <Frame
+                    Margin="20"
+                    Padding="5"
+                    BackgroundColor="{DynamicResource Black}"
+                    CornerRadius="100">
+                    <HorizontalStackLayout VerticalOptions="Center">
+                        <Button
+                            Margin="0"
+                            Padding="0"
+                            Background="Transparent"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.MainPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="25"
+                            Text="&#xe88a;"
+                            TextColor="White" />
+                        <Button
+                            Margin="0"
+                            Padding="8"
+                            Background="Transparent"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.TaskListPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            Text="&#xe873;"
+                            TextColor="White" />
+                        <Button
+                            Margin="0"
+                            Padding="8"
+                            Background="Transparent"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            Text="&#xebcc;"
+                            TextColor="White" />
+                        <Button
+                            Margin="0"
+                            Padding="8"
+                            Background="{DynamicResource Primary}"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.SettingPageRoute}"
+                            CornerRadius="100"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            Text="&#xe8b8;"
+                            TextColor="White" />
+                    </HorizontalStackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>
