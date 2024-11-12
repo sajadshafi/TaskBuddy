@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WorkBuddy.MAUI.Views.Pages.WorkspacesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:WorkBuddy.MAUI.Models"
+    xmlns:viewmodels="clr-namespace:WorkBuddy.MAUI.ViewModels"
+    x:DataType="viewmodels:WorkspaceViewModel">
+    <Grid>
+        <!--  Define two rows: one for the content and one for the fixed Frame  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!--  Takes just enough space for the Frame  -->
+        </Grid.RowDefinitions>
+        <Grid
+            Padding="20,20,20,80"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="Auto,*"
+            VerticalOptions="FillAndExpand">
+
+            <!--  Top bar  -->
+            <Grid Grid.Row="0" ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Back icon  -->
+                <Border
+                    Grid.Column="0"
+                    Margin="0"
+                    BackgroundColor="Transparent"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Stroke="#20FFFFFF"
+                    StrokeShape="RoundRectangle 40,40,40,40"
+                    StrokeThickness="6"
+                    WidthRequest="50">
+
+                    <Border
+                        Margin="0"
+                        BackgroundColor="{DynamicResource White}"
+                        HeightRequest="45"
+                        HorizontalOptions="Center"
+                        Stroke="White"
+                        StrokeShape="RoundRectangle 35,35,35,35"
+                        StrokeThickness="3"
+                        WidthRequest="45">
+
+                        <!--  Image inside the borders  -->
+                        <Button
+                            Margin="0,0,2,0"
+                            Background="{DynamicResource LightThemeBackground}"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.BackRoute}"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="30"
+                            HeightRequest="57"
+                            HorizontalOptions="Center"
+                            Text="&#xe5cb;"
+                            TextColor="{DynamicResource LightThemeText}"
+                            VerticalOptions="Center"
+                            WidthRequest="57" />
+                    </Border>
+                </Border>
+
+                <!--  Page heading  -->
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Margin="40,0,0,0"
+                    HorizontalOptions="StartAndExpand"
+                    VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansRegular"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Workspaces"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <RefreshView
+                Grid.Row="1"
+                Margin="0,20,0,0"
+                Background="Transparent"
+                Command="{Binding GetWorkspacesCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsRefreshing="{Binding IsRefreshing}"
+                RefreshColor="{DynamicResource Primary}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView HorizontalOptions="FillAndExpand" ItemsSource="{Binding Workspaces}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:WorkspaceDto">
+                            <Frame
+                                Grid.Row="1"
+                                Margin="0,2"
+                                Padding="0"
+                                BackgroundColor="{DynamicResource DarkSecondary}"
+                                BorderColor="Transparent"
+                                CornerRadius="15"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+                                <SwipeView Background="{DynamicResource DarkSecondary}" Threshold="50">
+                                    <SwipeView.RightItems>
+                                        <SwipeItemView CommandParameter="{Binding Id}">
+                                            <Grid BackgroundColor="DarkRed" WidthRequest="50">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontFamily="MIconsRound"
+                                                    FontSize="25"
+                                                    HorizontalOptions="Center"
+                                                    Text="&#xe872;"
+                                                    VerticalOptions="Center" />
+                                            </Grid>
+                                            <SwipeItemView.Command>
+                                                <Binding Path="BindingContext.DeleteWorkspaceCommand" Source="{RelativeSource AncestorType={x:Type ContentPage}}" />
+                                            </SwipeItemView.Command>
+                                        </SwipeItemView>
+                                    </SwipeView.RightItems>
+                                    <Grid
+                                        Padding="20,15"
+                                        ColumnDefinitions="*,Auto"
+                                        ColumnSpacing="15"
+                                        HorizontalOptions="FillAndExpand">
+                                        <VerticalStackLayout Grid.Column="0" HorizontalOptions="StartAndExpand">
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Text="{Binding Name}"
+                                                TextColor="{DynamicResource DarkThemeText}" />
+
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </SwipeView>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+        </Grid>
+        <BoxView
+            Grid.Row="1"
+            Background="{DynamicResource MenuOverlayGradient}"
+            HeightRequest="150"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="End" />
+
+        <Frame
+            Grid.Row="1"
+            Margin="0,0,0,20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            CornerRadius="0"
+            HorizontalOptions="Center"
+            VerticalOptions="End">
+            <Frame
+                Padding="40,12"
+                BackgroundColor="{DynamicResource Primary}"
+                CornerRadius="100"
+                VerticalOptions="Center">
+                <HorizontalStackLayout
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Center"
+                    Spacing="6"
+                    VerticalOptions="Center">
+                    <Image
+                        HeightRequest="16"
+                        Source="add_white.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="16" />
+                    <Label
+                        Padding="0"
+                        CharacterSpacing=".8"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="Add workspace"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                    <!--  Add TapGestureRecognizer to simulate button click  -->
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CreateWorkspaceCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </Frame>
+    </Grid>
+</ContentPage>
