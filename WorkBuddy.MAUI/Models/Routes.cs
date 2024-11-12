@@ -8,7 +8,7 @@ namespace WorkBuddy.MAUI.Models
         public static readonly string AddTaskPageRoute = nameof(AddTaskPage);
         public static readonly string TaskListPageRoute = nameof(TaskListPage);
         public static readonly string SettingPageRoute = nameof(SettingPage);
-        public static readonly string CalendarPageRoute = nameof(CalendarPage);
+        public static readonly string WorkspacePageRoute = nameof(WorkspacesPage);
         public static readonly string BackRoute = "..";
 
     }

@@ -15,7 +15,7 @@ namespace WorkBuddy.MAUI.ViewModels
 
         public BaseViewModel()
         {
-            NavigateToCommand = new(async (object path) => await NavigateAsync((string)path));
+            NavigateToCommand = new Command(async (object path) => await NavigateAsync((string)path));
         }
 
         public bool IsBusy
@@ -30,9 +30,9 @@ namespace WorkBuddy.MAUI.ViewModels
             }
         }
 
-        public static async Task NavigateAsync(string path)
+        private async Task NavigateAsync(string path)
         {
-            ArgumentNullException.ThrowIfNullOrEmpty(nameof(path));
+            ArgumentException.ThrowIfNullOrEmpty(nameof(path));
 
             var currentPage = Shell.Current.CurrentPage.GetType().Name;
 

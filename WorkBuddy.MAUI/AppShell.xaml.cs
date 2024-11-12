@@ -14,7 +14,7 @@ namespace WorkBuddy.MAUI
             Routing.RegisterRoute(Routes.AddTaskPageRoute, typeof(AddTaskPage));
             Routing.RegisterRoute(Routes.TaskListPageRoute, typeof(TaskListPage));
             Routing.RegisterRoute(Routes.SettingPageRoute, typeof(SettingPage));
-            Routing.RegisterRoute(Routes.CalendarPageRoute, typeof(CalendarPage));
+            Routing.RegisterRoute(Routes.WorkspacePageRoute, typeof(WorkspacesPage));
         }
     }
 }

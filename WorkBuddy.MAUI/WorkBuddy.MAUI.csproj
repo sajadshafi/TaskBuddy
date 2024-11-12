@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios;</TargetFrameworks>
-
+		<TargetFrameworks>net8.0-android;</TargetFrameworks>
+		<TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">$(TargetFrameworks);net8.0-ios;</TargetFrameworks>
 		<!-- Note for MacCatalyst:
 		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
 		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
@@ -77,6 +77,13 @@
 	  <None Remove="Resources\Images\Icons\watch_black.svg" />
 	  <None Remove="Resources\Images\Icons\watch_white.svg" />
 	  <None Remove="Resources\Images\profile.jpg" />
+	  <None Include="Platforms\iOS\Handlers\BorderlessDatePickerHandler.cs" />
+	  <None Include="Platforms\iOS\Handlers\BorderlessEditorHandler.cs" />
+	  <None Include="Platforms\iOS\Handlers\BorderlessEntryHandler.cs" />
+	  <None Include="Platforms\iOS\Handlers\BorderlessTimePickerHandler.cs" />
+	  <None Include="Platforms\iOS\Handlers\CustomPickerHandler.cs" />
+	  <None Include="Platforms\iOS\Handlers\CustomSearchBarHandler.cs" />
+	  <None Include="Platforms\iOS\Handlers\CustomSwitchHandler.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -98,6 +105,9 @@
 	  <Compile Update="Views\Pages\AddTaskPage.xaml.cs">
 	    <DependentUpon>AddTaskPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Platforms\Android\BroadcastRecievers\AlarmBroadcastReceiver.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -107,15 +117,19 @@
 	  <MauiXaml Update="Views\Pages\AddTaskPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Pages\CalendarPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\Pages\SettingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Pages\TaskListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Pages\WorkspacesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Platforms\Android\Resources\drawable-xhdpi\" />
 	</ItemGroup>
 
 </Project>

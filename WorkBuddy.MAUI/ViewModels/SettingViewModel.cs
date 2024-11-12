@@ -2,5 +2,9 @@
 {
     public class SettingViewModel : BaseViewModel
     {
+        public SettingViewModel()
+        {
+            
+        }
     }
 }

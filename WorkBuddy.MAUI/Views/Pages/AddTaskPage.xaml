@@ -113,6 +113,7 @@
                                 Placeholder="Lorem ipsum dolor"
                                 PlaceholderColor="#70FFFFFF"
                                 Text="{Binding WorkItemDto.Title}"
+                                TextColor="White"
                                 VerticalOptions="Center" />
                         </Frame>
                     </VerticalStackLayout>
@@ -145,6 +146,7 @@
                                 Placeholder="Some dummy dexcription here for the task that is being created and this will be some kinda hint"
                                 PlaceholderColor="#70FFFFFF"
                                 Text="{Binding WorkItemDto.Description}"
+                                TextColor="White"
                                 VerticalOptions="Center" />
                         </Frame>
                     </VerticalStackLayout>
@@ -180,6 +182,7 @@
                                         Date="{Binding WorkItemDto.ScheduledOnDate}"
                                         FontFamily="Inter"
                                         FontSize="15"
+                                        TextColor="White"
                                         VerticalOptions="Center" />
                                     <Image
                                         HeightRequest="20"
@@ -261,6 +264,10 @@
                                     BackgroundColor="Transparent"
                                     FontFamily="Inter"
                                     FontSize="15"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    ItemsSource="{Binding Workspaces}"
+                                    SelectedItem="{Binding SelectedWorkspace}"
+                                    TextColor="White"
                                     TitleColor="#70FFFFFF"
                                     VerticalOptions="Center" />
                                 <Image
@@ -296,7 +303,7 @@
             HorizontalOptions="Center"
             VerticalOptions="End">
             <Frame
-                Padding="50,12"
+                Padding="40,12"
                 BackgroundColor="{DynamicResource Primary}"
                 CornerRadius="100"
                 VerticalOptions="Center">

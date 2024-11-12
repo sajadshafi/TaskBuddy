@@ -24,7 +24,6 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
 
-
                 <!--  Top bar  -->
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -137,7 +136,8 @@
                     <controls:CustomSearchBar
                         BackgroundColor="Transparent"
                         CancelButtonColor="{DynamicResource White}"
-                        Placeholder="Search your task.."
+                        Placeholder="Search your task..."
+                        TextColor="White"
                         VerticalOptions="Center" />
                 </Grid>
 
@@ -164,11 +164,12 @@
                                 FontAttributes="Bold"
                                 FontFamily="OpenSansSemibold"
                                 SelectedIndex="5"
-                                TextColor="White">
+                                TextColor="#FFFFFF"
+                                TitleColor="#FFFFFD">
                                 <controls:CustomPicker.ItemsSource>
                                     <x:Array Type="{x:Type x:String}">
                                         <x:String>January</x:String>
-                                        <x:String>Febuary</x:String>
+                                        <x:String>February</x:String>
                                         <x:String>March</x:String>
                                         <x:String>April</x:String>
                                         <x:String>May</x:String>
@@ -697,7 +698,7 @@
                             Padding="8"
                             Background="Transparent"
                             Command="{Binding NavigateToCommand}"
-                            CommandParameter="{x:Static models:Routes.CalendarPageRoute}"
+                            CommandParameter="{x:Static models:Routes.WorkspacePageRoute}"
                             CornerRadius="100"
                             FontAttributes="Bold"
                             FontFamily="MIconsRound"

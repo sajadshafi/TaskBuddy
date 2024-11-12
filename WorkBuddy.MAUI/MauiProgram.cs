@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using WorkBuddy.MAUI.Infrastructure;
+using WorkBuddy.MAUI.PlatformServices;
 using WorkBuddy.MAUI.Services;
 using WorkBuddy.MAUI.Views.Pages;
 using WorkBuddy.MAUI.ViewModels;
@@ -64,14 +65,23 @@ namespace WorkBuddy.MAUI
             builder.Services.AddTransient<AddTaskPage>();
             builder.Services.AddTransient<AddTaskViewModel>();
 
-            builder.Services.AddTransient<SettingPage>();
-            builder.Services.AddTransient<SettingViewModel>();
-
             builder.Services.AddTransient<TaskListPage>();
             builder.Services.AddTransient<TaskListViewModel>();
 
+            builder.Services.AddTransient<WorkspacesPage>();
+            builder.Services.AddTransient<WorkspaceViewModel>();
+
+            builder.Services.AddTransient<SettingPage>();
+            builder.Services.AddTransient<SettingViewModel>();
+
             builder.Services.AddSingleton<WorkItemService>();
             builder.Services.AddSingleton<WorkspaceService>();
+            
+            
+            // Add platform based services
+            #if ANDROID
+            builder.Services.AddTransient<INotificationService, NotificationService>();
+            #endif
 
             return builder.Build();
         }

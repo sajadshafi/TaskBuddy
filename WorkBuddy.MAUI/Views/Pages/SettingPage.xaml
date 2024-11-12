@@ -254,6 +254,8 @@
                             Margin="0"
                             Padding="8"
                             Background="Transparent"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="{x:Static models:Routes.WorkspacePageRoute}"
                             CornerRadius="100"
                             FontAttributes="Bold"
                             FontFamily="MIconsRound"

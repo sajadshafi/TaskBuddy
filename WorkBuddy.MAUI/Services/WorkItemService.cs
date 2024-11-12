@@ -35,6 +35,27 @@ namespace WorkBuddy.MAUI.Services
             }
         }
 
+        public async Task<IEnumerable<WorkItemDto>> GetUpcomingWorkItemsAsync()
+        {
+            try
+            {
+                var items = await _connection.Table<WorkItem>()
+                    .Where(item => item.ScheduledOn > DateTime.Now && !item.IsCompleted)
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+
+                return items
+                    .Select(item => 
+                        WorkItemDto.Create(item))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}:  {ex}");
+                return [];
+            }
+        }
+
         public async Task<WorkItemDto> GetWorkItemByIdAsync(int id)
         {
             var item = await _connection.Table<WorkItem>()
@@ -52,7 +73,7 @@ namespace WorkBuddy.MAUI.Services
                 Description = workItemDto.Description,
                 IsCompleted = false,
                 WorkspaceId = workItemDto.WorkspaceId,
-                ScheduledOn = workItemDto.ScheduledOnDate.Add(workItemDto.ScheduledAtTime)
+                ScheduledOn = workItemDto.ScheduledOnDate.Date + workItemDto.ScheduledAtTime
             };
 
             await _connection.InsertAsync(item);
@@ -91,7 +112,7 @@ namespace WorkBuddy.MAUI.Services
             await _connection.UpdateAsync(item);
             return true;
         }
-
+        
         public async Task<bool> DeleteAsync(int id)
         {
             WorkItem item = await _connection.Table<WorkItem>()

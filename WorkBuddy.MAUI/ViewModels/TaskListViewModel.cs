@@ -8,13 +8,16 @@ namespace WorkBuddy.MAUI.ViewModels
     {
         public ObservableCollection<WorkItemDto> WorkItems { get; set; } = [];
         public ObservableCollection<WorkspaceDto> Workspaces { get; set; } = [];
-        private WorkspaceDto _selectedWorkspace;
+        private WorkspaceDto? _selectedWorkspace;
         private bool _isRefreshing = false;
+        private bool _isWorkspaceDropdownVisible = false;
 
         #region Commands
         public Command DeleteTaskCommand { get; private set; }
         public Command GetTasksCommand { get; private set; }
         public Command SelectWorkspaceCommand { get; private set; }
+        public Command CreateWorkspaceCommand { get; private set; }
+        public Command ShowWorkspaceCommand { get; private set; }
         #endregion
 
         private readonly WorkItemService _workItemService;
@@ -22,13 +25,15 @@ namespace WorkBuddy.MAUI.ViewModels
 
         public TaskListViewModel(WorkItemService workItemService, WorkspaceService workspaceService)
         {
-            GetTasksCommand = new(GetTasks);
             _workItemService = workItemService;
             _workspaceService = workspaceService;
+            GetTasksCommand = new(GetTasks);
             DeleteTaskCommand = new Command<int>(async (itemId) => await DeleteTaskAsync(itemId));
             SelectWorkspaceCommand = new Command<WorkspaceDto>(async (workspace) => await SelectWorkspaceAsync(workspace));
-            GetTasks();
+            ShowWorkspaceCommand = new(ShowWorkspaceDropdown);
+            CreateWorkspaceCommand = new Command(async () => await CreateWorkspaceAsync());
             GetWorkspaces();
+            GetTasks();
         }
 
         public WorkspaceDto SelectedWorkspace
@@ -69,8 +74,6 @@ namespace WorkBuddy.MAUI.ViewModels
             {
                 Workspaces.Add(workspace);
             }
-
-            Workspaces.Add(new(0, "create new"));
         }
 
         public bool IsRefreshing
@@ -122,5 +125,37 @@ namespace WorkBuddy.MAUI.ViewModels
                 }
             }
         }
+
+        public bool IsWorkspaceDropdownVisible
+        {
+            get => _isWorkspaceDropdownVisible;
+            set
+            {
+                if (_isWorkspaceDropdownVisible == value)
+                    return;
+                _isWorkspaceDropdownVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void ShowWorkspaceDropdown()
+        {
+            IsWorkspaceDropdownVisible = !IsWorkspaceDropdownVisible;
+        }
+
+        public async Task CreateWorkspaceAsync()
+        {
+
+            var workspaceName = await Shell.Current.DisplayPromptAsync("Workspace", "Create new workspace", "Ok", "Cancel");
+
+            if (workspaceName == null) return;
+
+            var response = await _workspaceService.CreateAsync(new(0, workspaceName));
+
+            Workspaces.Add(response);
+
+            return;
+        }
+
     }
 }

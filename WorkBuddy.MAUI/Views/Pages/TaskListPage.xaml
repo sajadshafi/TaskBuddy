@@ -17,13 +17,17 @@
             <!--  Takes just enough space for the Frame  -->
         </Grid.RowDefinitions>
         <Grid
-            Padding="20,20,20,80"
+            Grid.Row="0"
+            Padding="20,20,20,0"
             HorizontalOptions="FillAndExpand"
-            RowDefinitions="Auto,Auto,*"
-            VerticalOptions="FillAndExpand">
+            RowDefinitions="*"
+            VerticalOptions="StartAndExpand">
 
             <!--  Top bar  -->
-            <Grid Grid.Row="0" ColumnSpacing="15">
+            <Grid
+                Grid.Row="0"
+                ColumnSpacing="15"
+                VerticalOptions="Start">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -71,69 +75,102 @@
 
                 <Frame
                     Grid.Column="1"
-                    Margin="0"
-                    Padding="16,0"
-                    BackgroundColor="{DynamicResource DarkSecondary}"
-                    CornerRadius="25"
-                    HasShadow="True"
-                    HeightRequest="45">
-                    <Frame.Shadow>
-                        <Shadow
-                            Brush="{DynamicResource Black}"
-                            Opacity="0.2"
-                            Radius="20"
-                            Offset="10,10" />
-                    </Frame.Shadow>
-                    <Grid Padding="0" VerticalOptions="Center">
-                        <controls:CustomPicker
-                            Title="Select workspace"
-                            Margin="0"
-                            BackgroundColor="aqua"
-                            FontFamily="Inter"
-                            FontSize="15"
-                            ItemDisplayBinding="{Binding Name}"
-                            ItemsSource="{Binding Workspaces}"
-                            SelectedItem="{Binding SelectedWorkspace, Mode=TwoWay}"
-                            TitleColor="#70FFFFFF"
-                            VerticalOptions="Center"
-                            VerticalTextAlignment="Center">
-                            <controls:CustomPicker.Behaviors>
-                                <toolkit:EventToCommandBehavior
-                                    Command="{Binding SelectWorkspaceCommand}"
-                                    CommandParameter="{Binding SelectedWorkspace}"
-                                    EventName="SelectedIndexChanged" />
-                            </controls:CustomPicker.Behaviors>
-                        </controls:CustomPicker>
+                    Padding="5"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+                    <Grid ColumnDefinitions="Auto,Auto">
+                        <Label Grid.Column="0" Text="General" />
                         <Image
+                            x:Name="workspace_dropdown_arrow"
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
                             HeightRequest="20"
                             HorizontalOptions="End"
                             Rotation="90"
                             Source="arrow_white.svg"
                             VerticalOptions="Center"
-                            WidthRequest="20">
+                            WidthRequest="17">
                             <Image.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="{DynamicResource DarkThemeText}" />
                             </Image.Behaviors>
                         </Image>
                     </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowWorkspaceCommand}" />
+                    </Frame.GestureRecognizers>
                 </Frame>
+
             </Grid>
 
+            <Frame
+                x:Name="workspace_dropdown"
+                Margin="0,42"
+                Padding="5,10"
+                AnchorY="0"
+                BackgroundColor="{DynamicResource DarkThemeBackground}"
+                BorderColor="{DynamicResource DarkThemeText}"
+                CornerRadius="5"
+                HorizontalOptions="End"
+                IsVisible="{Binding IsWorkspaceDropdownVisible}"
+                VerticalOptions="Start"
+                WidthRequest="130"
+                ZIndex="2">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label
+                            Padding="4,3,8,8"
+                            HorizontalOptions="StartAndExpand"
+                            Opacity=".7"
+                            Text="Workspaces"
+                            VerticalOptions="Center"
+                            VerticalTextAlignment="Center" />
+                        <Button
+                            Margin="5,-4,0,0"
+                            Padding="0"
+                            Background="Transparent"
+                            Command="{Binding CreateWorkspaceCommand}"
+                            FontAttributes="Bold"
+                            FontFamily="MIconsRound"
+                            FontSize="20"
+                            HeightRequest="20"
+                            HorizontalOptions="End"
+                            Text="&#xe145;"
+                            TextColor="{DynamicResource DarkThemeText}"
+                            VerticalOptions="Center"
+                            WidthRequest="20" />
+                    </HorizontalStackLayout>
+                    <CollectionView Margin="0,5,0,0" ItemsSource="{Binding Workspaces}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:WorkspaceDto">
+                                <Label
+                                    Padding="10,5"
+                                    Background="Transparent"
+                                    Text="{Binding Name}"
+                                    TextColor="White" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
             <RefreshView
-                Grid.Row="2"
-                Margin="0,20,0,0"
-                Background="Transparent"
+                Grid.Row="1"
+                Margin="0,65,0,70"
                 Command="{Binding GetTasksCommand}"
                 HorizontalOptions="FillAndExpand"
                 IsRefreshing="{Binding IsRefreshing}"
                 RefreshColor="{DynamicResource Primary}"
                 VerticalOptions="FillAndExpand">
-                <CollectionView HorizontalOptions="FillAndExpand" ItemsSource="{Binding WorkItems}">
+                <CollectionView
+                    HorizontalOptions="FillAndExpand"
+                    ItemsSource="{Binding WorkItems}"
+                    VerticalOptions="FillAndExpand">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:WorkItemDto">
                             <Frame
                                 Grid.Row="1"
-                                Margin="0,5,0,8"
+                                Margin="0,1"
                                 Padding="0"
                                 BackgroundColor="{DynamicResource DarkSecondary}"
                                 BorderColor="Transparent"
@@ -193,7 +230,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </RefreshView>
-
         </Grid>
 
         <BoxView
